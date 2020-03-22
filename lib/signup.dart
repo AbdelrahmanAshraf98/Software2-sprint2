@@ -9,9 +9,9 @@ class SignUp extends StatelessWidget {
     return new MaterialApp(
 
       debugShowCheckedModeBanner: false,
-        routes: <String, WidgetBuilder>{
-          '/main': (context) => MyHomePage(),
-        }
+//        routes: <String, WidgetBuilder>{
+//          '/main': (context) => MyHomePage(),
+//        }
     );
   }
 }
