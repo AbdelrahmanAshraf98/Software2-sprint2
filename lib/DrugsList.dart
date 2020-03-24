@@ -32,7 +32,6 @@ class DrugsState extends State<DrugsList>{
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return AddDrugsForm();
             }));
-            //navigateToStudent("Add New Student");
           },
           tooltip: 'Add Drug',
           child: Icon(Icons.add),
