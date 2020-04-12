@@ -11,6 +11,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.2
+  flappy_search_bar: ^1.7.2
+  validators: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -18,5 +21,5 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/
+    - assets/images/
 

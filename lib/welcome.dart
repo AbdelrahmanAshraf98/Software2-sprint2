@@ -50,7 +50,8 @@ class WelcomePage extends StatelessWidget {
                     color: S_color,
                     margin: EdgeInsets.only(top: 10.0),
                     width: double.infinity,
-                    height: 60,
+                      height: 60
+
                   ),
                 ),
               ),

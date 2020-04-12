@@ -9,7 +9,7 @@ class Drugs{
 
   Drugs({this.drugName,this.drugCode,this.drugPrice,this.drugQuantity,this.date_added});
 
-  //TODO: adddrugs();
+//TODO: adddrugs();
   //TODO: deletedrugs();
   //TODO: showList();
 }
