@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart' as validator;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'drugClass.dart';
 void main() => runApp(MyApp());
 
