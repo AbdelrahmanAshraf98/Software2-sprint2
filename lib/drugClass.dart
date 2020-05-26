@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
 
 class Drugs{
   String drugName;
   String drugCode;
-  double drugPrice;
-  int drugQuantity;
-  String date_added;
+  String drugPrice;
+  String drugQuantity;
 
-  Drugs({this.drugName,this.drugCode,this.drugPrice,this.drugQuantity,this.date_added});
-
-//TODO: adddrugs();
-  //TODO: deletedrugs();
-  //TODO: showList();
+  Drugs({this.drugName,this.drugCode,this.drugPrice,this.drugQuantity});
 }
+  //TODO: adddrugs();
+  //TODO: deletedrugs();
+  //TODO: loaddrugs();
+ //TODO : editdrugs();

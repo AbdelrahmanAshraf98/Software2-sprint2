@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:validators/validators.dart' as validator;
+import 'package:pharmacyapp/DatabaseConnection.dart';
 import 'drugClass.dart';
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class AddDrugs extends StatelessWidget {
+  static String id = "AddDrugs";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,55 +22,47 @@ class AddDrugsForm extends StatefulWidget{
   _AddDrugsFormState createState() => _AddDrugsFormState();
 }
 class _AddDrugsFormState extends State<AddDrugsForm>{
-  final _formKey = GlobalKey<FormState>();
-  //instances of the class Drugs
-  Drugs drug = Drugs();
+  GlobalKey<FormState> _key = new GlobalKey();  //instances of the class Drug
+  String _drugName, _drugCode ,_drugPrice ,_drugQuantity;
+  DataBaseConnection db = DataBaseConnection();
+
   @override
   Widget build(BuildContext context){
     final halfMediaWidth = MediaQuery.of(context).size.width;
     return Form(
-      key: _formKey,
+      key: _key,
       child: Column(
         children: <Widget>[
+
           Container(
             alignment: Alignment.topCenter,
             width: halfMediaWidth,
-            child: MyTextFormField(
-              hintText: 'Medicine name',
-              validator: (String value){
-                if(value.isEmpty){
-                  return 'Enter the medicine name ';
+            child: TextFormField(
+                decoration: InputDecoration(labelText: 'medicine name'),
+                onSaved: (val){
+                  _drugName = val;
                 }
-                return null;
-              },
+
             ),
           ),
-          MyTextFormField(
-            hintText: 'Medicine Code',
-            validator: (String value){
-              if(value.isEmpty){
-                return 'Enter the medicine code ';
-              }
-              return null;
+          TextFormField(
+            decoration: InputDecoration(labelText: 'medicine code'),
+
+            onSaved: (val){
+              _drugCode = val;
             },
           ),
-          MyTextFormField(
-            hintText: 'Medicine price',
-            validator: (String value){
-              if(value.isEmpty){
-                return 'Enter the medicine price' ;
-              }
-              return null;
+          TextFormField(
+            decoration: InputDecoration(labelText: 'medicine price'),
+            onSaved: (val){
+              _drugPrice = val;
             },
           ),
 
-          MyTextFormField(
-            hintText: 'Medicine quantity',
-            validator: (String value){
-              if(value.isEmpty){
-                return 'Enter the medicine quantity ';
-              }
-              return null;
+          TextFormField(
+            decoration: InputDecoration(labelText: 'medicine quantity'),
+            onSaved: (val){
+              _drugQuantity = val ;
             },
           ),
           RaisedButton(
@@ -81,15 +73,17 @@ class _AddDrugsFormState extends State<AddDrugsForm>{
                 color: Colors.white,
               ),
             ),
-            onPressed: (){
-              if(_formKey.currentState.validate()){
-                //all the fields values are saved
-                _formKey.currentState.save();
-                //to navigate to another route
-                /**
-                 * Navigator.push(context,MaterialPageRoute(builder:(context)=>secondRoute()));
-                 *
-                 * **/
+            onPressed:(){
+              if(_key.currentState.validate()){
+                _key.currentState.save();
+                db.addDrugs(Drugs(
+                  drugName : _drugName,
+                  drugCode : _drugCode,
+                  drugPrice: _drugPrice,
+                  drugQuantity: _drugQuantity,
+
+                ));
+
               }
             },
           ),
@@ -98,28 +92,5 @@ class _AddDrugsFormState extends State<AddDrugsForm>{
 
     );
   }
-}
-class MyTextFormField extends StatelessWidget{
-  final String hintText;
-  final Function validator;
-  final Function onSaved;
 
-  MyTextFormField({this.hintText,this.validator,this.onSaved});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: hintText,
-          contentPadding: EdgeInsets.all(15.0),
-          border: InputBorder.none,
-          filled: true,
-          fillColor: Colors.grey[200],
-        ),
-        onSaved: onSaved,
-        validator: validator,
-      ),
-    );
-  }
 }

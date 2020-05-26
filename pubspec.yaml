@@ -14,7 +14,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flappy_search_bar: ^1.7.2
   validators: ^2.0.0
-
+  curved_navigation_bar: ^0.3.2
 
 
 dev_dependencies:
@@ -23,5 +23,5 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/images/
+    - images/
 

@@ -88,28 +88,30 @@ class UserHome extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(Username, style: kbuttonStyle),
-                        Row(
-                          children: <Widget>[
-                            Text('$Userage y', style: klabelStyle),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(Usernum, style: klabelStyle),
-                          ],
-                        ),
-                        Text(Userad, style: klabelStyle),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: Text(
-                            'edit profile >>',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Text(Username, style: kbuttonStyle),
+                          Row(
+                            children: <Widget>[
+                              Text('$Userage y', style: klabelStyle),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(Usernum, style: klabelStyle),
+                            ],
                           ),
-                        ),
-                      ],
+                          Text(Userad, style: klabelStyle),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Text(
+                              'edit profile >>',
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

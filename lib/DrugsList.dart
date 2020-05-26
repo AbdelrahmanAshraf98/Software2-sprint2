@@ -55,8 +55,8 @@ class DrugsState extends State<DrugsList>{
                 title: Text(this.drugsList[position].drugName),
                 subtitle: Text("Code "+this.drugsList[position].drugCode + " | " +
                     " price "+ this.drugsList[position].drugPrice.toString()
-                    +"/n"+"Quantity "+ this.drugsList[position].drugQuantity.toString()
-                    +" Date "+ this.drugsList[position].date_added),
+                    +"/n"+"Quantity "+ this.drugsList[position].drugQuantity.toString()),
+
                 trailing:
                 GestureDetector( child: Icon(Icons.delete, color: Colors.grey,),
                   onTap: (){
