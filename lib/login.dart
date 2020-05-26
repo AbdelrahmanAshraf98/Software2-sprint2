@@ -1,7 +1,4 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'signup.dart';
 
 
 class Login extends StatelessWidget {
@@ -15,7 +12,7 @@ class Login extends StatelessWidget {
          debugShowCheckedModeBanner: false,
          routes: <String, WidgetBuilder> {
            '/main': (context) => MyHomePage(),
-           '/signup': (context) => SignUpPage(),
+       //    '/signup': (context) => SignUpPage(),
        },
      );
  
