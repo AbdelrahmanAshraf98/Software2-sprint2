@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage>{
     String _email, _password;
   //Sign In funcation
   void signIn() async{
-     FirebaseUser user = await FirebaseAuth.instance.signinWithEmailAndPassword(email: _email,password: _password);  
+     //FirebaseUser user = await FirebaseAuth.instance.signinWithEmailAndPassword(email: _email,password: _password);
  }
     @override
     Widget build(BuildContext context){

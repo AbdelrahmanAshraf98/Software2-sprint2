@@ -9,9 +9,9 @@ class SignUp extends StatelessWidget {
     return new MaterialApp(
 
       debugShowCheckedModeBanner: false,
-        routes: <String, WidgetBuilder>{
-          '/main': (context) => MyHomePage(),
-        }
+//        routes: <String, WidgetBuilder>{
+//          '/main': (context) => MyHomePage(),
+//        }
     );
   }
 }
@@ -22,6 +22,13 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPage extends State<SignUpPage>{
+
+final formKey = GlobalKey<FormState>();
+    String _email, _password;
+  //Sign In funcation
+  void register() async{
+     FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password);  
+ }
 
   @override
   Widget build(BuildContext context){
@@ -129,9 +136,7 @@ class _SignUpPage extends State<SignUpPage>{
                         color: Colors.green,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: (){
-                            //Going to Home Page After Sign up
-                          },
+                          onTap: register,
                           child: Center(
                             child: Text(
                               'Sign Up',
