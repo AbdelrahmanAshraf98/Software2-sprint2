@@ -27,7 +27,7 @@ final formKey = GlobalKey<FormState>();
     String _email, _password;
   //Sign In funcation
   void register() async{
-     FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password);  
+    // FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password);
  }
 
   @override
