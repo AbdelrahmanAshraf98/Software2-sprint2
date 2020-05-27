@@ -15,10 +15,9 @@ dependencies:
   flappy_search_bar: ^1.7.2
   validators: ^2.0.0
   curved_navigation_bar: ^0.3.2
-   cloud_firestore: ^0.13.0+1
-  font_awesome_flutter: ^8.8.1
+  cloud_firestore: ^0.13.0+1
   firebase_auth: ^0.16.1
-
+  rflutter_alert: ^1.0.3
 
 dev_dependencies:
   flutter_test:

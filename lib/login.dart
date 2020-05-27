@@ -1,55 +1,38 @@
 import 'package:flutter/material.dart';
+import 'userhome.dart';
+import 'pharmacy_home.dart';
+import 'Constants.dart';
+import 'signup.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-
-class Login extends StatelessWidget {
-  // This widget is the root of your application.
- 
-
- @override
-   Widget build(BuildContext context) {
-     return new MaterialApp(
-         initialRoute: '/main',
-         debugShowCheckedModeBanner: false,
-         routes: <String, WidgetBuilder> {
-           '/main': (context) => MyHomePage(),
-       //    '/signup': (context) => SignUpPage(),
-       },
-     );
- 
-   }
- }
- 
-
-class MyHomePage extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LoginState createState() => _LoginState();
 }
 
-class _MyHomePageState extends State<MyHomePage>{
-    final formKey = GlobalKey<FormState>();
-    String _email, _password;
-  //Sign In funcation
-  void signIn() async{
-     //FirebaseUser user = await FirebaseAuth.instance.signinWithEmailAndPassword(email: _email,password: _password);
- }
-    @override
-    Widget build(BuildContext context){
-      return new Scaffold(
+class _LoginState extends State<Login> {
+  final _auth = FirebaseAuth.instance;
+  String email, password;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               child: Stack(
-                key: formKey,
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                     child: Text(
                       'Hello',
                       style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold
-                      ),
+                          color: P_color,
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -57,8 +40,9 @@ class _MyHomePageState extends State<MyHomePage>{
                     child: Text(
                       'There',
                       style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold
-                      ),
+                          color: P_color,
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -66,158 +50,181 @@ class _MyHomePageState extends State<MyHomePage>{
                     child: Text(
                       '.',
                       style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold, color: Colors.green
-                      ),
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold,
+                          color: S_color),
                     ),
                   ),
                 ],
               ),
             ),
-                  Container(
-                    padding: EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          decoration: InputDecoration(
-                            labelText: 'EMAIL',
-                            labelStyle: TextStyle(
+            Container(
+                padding: EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'EMAIL',
+                          labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              letterSpacing: 2.0
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green)
-                            )
-                          ),
-                        ),
-                        SizedBox(height: 22.0),
-                        TextField(
-                          decoration: InputDecoration(
-                              labelText: 'PASSWORD',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  letterSpacing: 2.0
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green)
-                              )
-                          ),
-                          obscureText: true,
-                        ),
-  
-                        SizedBox(height: 5.0),
-                        Container(
-                          alignment: Alignment(1.0,0.0),
-                          padding: EdgeInsets.only(top: 15.0,left: 20.0),
-                          child: InkWell(
-                            onTap: (){
-                              //Forget Password Page
-                            },
-                              child: Text('Forget Password',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  decoration: TextDecoration.underline
-                                ),
-                                ),
-                              ),
-                          ),
-                        SizedBox(height: 40.0),
-                        Container(
-                          height: 40.0,
-                          child: Material(
-                            borderRadius: BorderRadius.circular(20.0),
-                            shadowColor: Colors.greenAccent,
-                            color: Colors.green,
-                            elevation: 7.0,
-                            child: GestureDetector(
-                              onTap: signIn,
-                              child: Center(
-                                child: Text(
-                                  'LOGIN',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          height: 40.0,
-                          color: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1.0
-                              ),
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                  child: ImageIcon(AssetImage('assets/facebook-black.png')),
-                                ),
-                                SizedBox(width: 10.0),
-                                Center(
-                                  child: Text(
-                                      'Log in with facebook',
-                                      
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'
-                                      ) ,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                        ],
-                      )
+                              letterSpacing: 2.0),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: P_color))),
+                    onChanged: (value){
+                        email=value;
+                    },
                     ),
-                    SizedBox(height: 20.0,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'New Here ?',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat'
-                          ),
-                        ),
-                        SizedBox(width: 5.0),
-                        InkWell(
-                          onTap: () {
-                            //Going To Singup Page Button
-                            Navigator.pushNamed(context,'/signup');
-                          },
+                    SizedBox(height: 22.0),
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'PASSWORD',
+                          labelStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              letterSpacing: 2.0),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+                      obscureText: true,
+                      onChanged: (value){
+                        password=value;
+                      },
+                    ),
+                    SizedBox(height: 5.0),
+                    Container(
+                      alignment: Alignment(1.0, 0.0),
+                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                      child: InkWell(
+                        onTap: () {
+                          //Forget Password Page
+                        },
                         child: Text(
-                          'Register',
+                          'Forget Password',
                           style: TextStyle(
-                            color: Colors.green,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline
+                              color: P_color,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                              decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 40.0),
+                    Container(
+                      height: 40.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: P_color,
+                        color: P_color,
+                        elevation: 7.0,
+                        child: GestureDetector(
+                          onTap: () async {
+                              final newuser =
+                                  await _auth.signInWithEmailAndPassword(
+                                  email: email, password: password);
+                              if (newuser != null) {
+                                //TODO::ngeb type el user w n7oto fel condition el t7t dh mkan 'user'
+                                if ('user' == 'user') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return UserHome();
+                                    }),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return PharmacyHome();
+                                    }),
+                                  );
+                                }
+                              } else {
+//                                print('invalid');
+                                Alert(
+                                  context: context,
+                                  title: 'invalid input',
+                                  desc: 'the user may be doesn/''t exist ',
+                                ).show();
+                              }
+                            },
+                          child: Center(
+                            child: Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                  color: L_color,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat'),
+                            ),
                           ),
                         ),
-                        )
-                      ],
+                      ),
                     ),
-                ],
-              )
-            );
-          }
+                    SizedBox(height: 20.0),
+                    Container(
+                      height: 40.0,
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: P_color,
+                              style: BorderStyle.solid,
+                              width: 1.0),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Center(
+                              child: ImageIcon(
+                                  AssetImage('assets/facebook-black.png')),
+                            ),
+                            SizedBox(width: 10.0),
+                            Center(
+                              child: Text(
+                                'Log in with facebook',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+            SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'New Here ?',
+                  style: TextStyle(fontFamily: 'Montserrat'),
+                ),
+                SizedBox(width: 5.0),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return SignUpPage();
+                    }),);
+                  },
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                        color: P_color,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ));
   }
-  
+}

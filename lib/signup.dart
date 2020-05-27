@@ -1,70 +1,58 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
+import 'package:pharmacyapp/Constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pharmacyapp/userhome.dart';
+import 'package:pharmacyapp/welcome.dart';
+import 'pharmacy_home.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-
-class SignUp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-//        routes: <String, WidgetBuilder>{
-//          '/main': (context) => MyHomePage(),
-//        }
-    );
-  }
-}
 
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPage createState() => _SignUpPage();
 }
 
-class _SignUpPage extends State<SignUpPage>{
-
-final formKey = GlobalKey<FormState>();
-    String _email, _password;
-  //Sign In funcation
-  void register() async{
-   //  FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password);
- }
+class _SignUpPage extends State<SignUpPage> {
+  final _auth = FirebaseAuth.instance;
+  String email, password, username, type;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return new Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(12.0, 100.0, 0.0, 0.0),
-                    child: Text(
-                      'Signup',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(255.0, 110.0, 0.0, 0.0),
-                    child: Text(
-                      '.',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold, color: Colors.green
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-                padding: EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
-                child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Stack(
                   children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(12.0, 100.0, 0.0, 0.0),
+                      child: Text(
+                        'Signup',
+                        style: TextStyle(
+                            color: P_color,
+                            fontSize: 80.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(255.0, 110.0, 0.0, 0.0),
+                      child: Text(
+                        '.',
+                        style: TextStyle(
+                            fontSize: 80.0,
+                            fontWeight: FontWeight.bold,
+                            color: S_color),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
+                  child: Column(children: <Widget>[
                     TextField(
                       decoration: InputDecoration(
                           labelText: 'Username',
@@ -72,125 +60,145 @@ final formKey = GlobalKey<FormState>();
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              letterSpacing: 2.0
-                          ),
+                              letterSpacing: 2.0),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green)
-                          )
-                      ),
+                              borderSide: BorderSide(color: P_color))),
                     ),
                     SizedBox(height: 22.0),
                     TextField(
+                      onChanged: (value) {
+                        email = value;
+                      },
                       decoration: InputDecoration(
                           labelText: 'E-mail',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              letterSpacing: 2.0
-                          ),
+                              letterSpacing: 2.0),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green)
-                          )
-                      ),
+                              borderSide: BorderSide(color: P_color))),
                     ),
                     SizedBox(height: 22.0),
                     TextField(
+                      onChanged: (value) {
+                        password = value;
+                      },
                       decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              letterSpacing: 2.0
-                          ),
+                              letterSpacing: 2.0),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green)
-                          )
-                      ),
+                              borderSide: BorderSide(color: P_color))),
                       obscureText: true,
                     ),
                     SizedBox(height: 22.0),
                     TextField(
+                      onChanged: (value) {
+                        type = value;
+                      },
                       decoration: InputDecoration(
-                          labelText: 'Confirm Your Password',
+                          labelText: 'sign up as',
+                          hintText: 'type user or pharmacy',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              letterSpacing: 2.0
-                          ),
+                              letterSpacing: 2.0),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green)
-                          )
-                      ),
+                              borderSide: BorderSide(color: P_color))),
                       obscureText: true,
                     ),
-
                     SizedBox(height: 40.0),
                     Container(
                       height: 40.0,
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.greenAccent,
-                        color: Colors.green,
+                        shadowColor: P_color,
+                        color: P_color,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: register,
+                          onTap: () async {
+                            try{
+                              final newuser =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: email, password: password);
+                            if (newuser != null) {
+                              //TODO::nadef el data l tabel el user email w password w type
+                              if (type.toLowerCase() == 'user') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return UserHome();
+                                  }),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return PharmacyHome();
+                                  }),
+                                );
+                              }
+                            }}
+                            catch(e) {
+                              Alert(
+                                context: context,
+                                title: 'invalid input',
+                                desc: e,
+                              ).show();
+                            }
+                          },
                           child: Center(
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: L_color,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'
-                              ),
+                                  fontFamily: 'Montserrat'),
                             ),
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Container(
+                      height: 40.0,
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: P_color,
+                              style: BorderStyle.solid,
+                              width: 1.0),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap:(){
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  return WelcomePage();
+                                }),);
+                              } ,
+                                child: Text(
+                              'Back',
+                              style: TextStyle(
+                                  color: P_color,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline),
+                            )),
+                          ],
+                        ),
                       ),
-                  SizedBox(height: 20.0),
-                  Container(
-                  height: 40.0,
-                  color: Colors.transparent,
-                  child: Container(
-                  decoration: BoxDecoration(
-                  border: Border.all(
-                  color: Colors.black,
-                  style: BorderStyle.solid,
-                  width: 1.0
-                  ),
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        //Going To Singup Page Button
-                        Navigator.pushNamed(context,'/main');
-                      },
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                      color: Colors.green,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline
-                  ),
-                )
-              )
-            ],
-          ),
-          ),
-            )
-        ]
-      )
-        )
-      ]
-    )
-    );
+                    )
+                  ]))
+            ]));
   }
 }

@@ -31,7 +31,7 @@ class WelcomePage extends StatelessWidget {
                 onTap: () {
                   print('Sign up');
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return SignUp();
+                    return SignUpPage();
                   }),);
                 },
                 child: Padding(
