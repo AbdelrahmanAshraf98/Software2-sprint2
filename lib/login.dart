@@ -5,6 +5,7 @@ import 'Constants.dart';
 import 'signup.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'userclass.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
   String email, password;
+  Users user = new Users();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class _LoginState extends State<Login> {
                               color: Colors.grey,
                               letterSpacing: 2.0),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
+                              borderSide: BorderSide(color: P_color))),
                       obscureText: true,
                       onChanged: (value){
                         password=value;
@@ -125,7 +127,8 @@ class _LoginState extends State<Login> {
                                   email: email, password: password);
                               if (newuser != null) {
                                 //TODO::ngeb type el user w n7oto fel condition el t7t dh mkan 'user'
-                                if ('user' == 'user') {
+
+                                if ( user.userType == 'user') {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {

@@ -16,6 +16,8 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   font_awesome_flutter: ^8.8.1
   firebase_auth: ^0.16.1
+  flutter_alert: ^0.4.0
+  rflutter_alert: ^1.0.3
 
 
 

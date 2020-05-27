@@ -6,6 +6,8 @@ import 'package:pharmacyapp/userhome.dart';
 import 'package:pharmacyapp/welcome.dart';
 import 'pharmacy_home.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'DatabaseConnection.dart';
+import 'userclass.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -15,7 +17,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPage extends State<SignUpPage> {
   final _auth = FirebaseAuth.instance;
+  GlobalKey<FormState> _key = new GlobalKey();
   String email, password, username, type;
+  DataBaseConnection db = new DataBaseConnection();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,7 @@ class _SignUpPage extends State<SignUpPage> {
         resizeToAvoidBottomInset: false,
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: <Widget>[
               Container(
                 child: Stack(
@@ -128,6 +133,16 @@ class _SignUpPage extends State<SignUpPage> {
                                     email: email, password: password);
                             if (newuser != null) {
                               //TODO::nadef el data l tabel el user email w password w type
+                              if(_key.currentState.validate()){
+                                _key.currentState.save();
+                                db.addUser(Users(
+                                  userName : username,
+                                  userEmail : email,
+                                  userPassword: password,
+                                  userType: type,
+                                ));
+
+                              }
                               if (type.toLowerCase() == 'user') {
                                 Navigator.push(
                                   context,
@@ -145,6 +160,7 @@ class _SignUpPage extends State<SignUpPage> {
                               }
                             }}
                             catch(e) {
+
                               Alert(
                                 context: context,
                                 title: 'invalid input',

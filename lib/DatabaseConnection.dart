@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'drugClass.dart';
-
+import 'userclass.dart';
 class DataBaseConnection{
 final Firestore _firestore = Firestore.instance;
 
@@ -30,7 +30,17 @@ editDrugs(data, documentId) {
       .document(documentId)
       .updateData(data);
 }
+addUser(Users user){
+_firestore.collection('Users').add({
+  'username' : user.userName,
+  'Email' : user.userEmail,
+  'age' : user.userAge,
+  'phone' : user.userPhone,
+  'type': user.userType,});
 }
+
+}
+
 
 
 
