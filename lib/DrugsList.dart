@@ -1,73 +1,136 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'DatabaseConnection.dart';
 import 'package:flutter/material.dart';
-import 'addDrugs.dart';
-import 'drugClass.dart';
-class DrugsList extends StatefulWidget{
-
+import 'package:pharmacyapp/addDrugs.dart';
+DataBaseConnection db = DataBaseConnection();
+class ListViewDrug extends StatefulWidget{
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return DrugsState();
-  }
+  _ListViewDrugState createState()  => new _ListViewDrugState();
+
 }
 
-class DrugsState extends State<DrugsList>{
 
-  List<Drugs> drugsList;
-  int count = 0;
-
+class _ListViewDrugState extends State<ListViewDrug>{
   @override
   Widget build(BuildContext context) {
-    if (drugsList == null) {
-      drugsList = new List<Drugs>();
-
-    }
-    return Scaffold(
+    return MaterialApp(
+      title: 'Pharmacy App',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          title: Text("Drugs"),
+          title: Text('Drug list'),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: ()=> _createNewDrug(context)
+              ,
+            ),
+
+          ],
         ),
-        body: getDrugsList(),
-
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return AddDrugsForm();
-            }));
+        body: StreamBuilder(
+          stream: Firestore.instance.collection("Drugs").snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+            return DrugList(documents: snapshot.data.documents);
           },
-          tooltip: 'Add Drug',
-          child: Icon(Icons.add),
-        )
+        ),
+
+      ),
     );
-  }
+  }}
+class DrugList extends StatelessWidget {
+  final List<DocumentSnapshot> documents;
 
-  ListView getDrugsList(){
+  DrugList({this.documents});
+  Widget build(BuildContext context) {
+    return Center(
+      child: ListView.builder(
+          itemCount:  documents.length,
+          padding: EdgeInsets.only(top: 12.0),
+          itemBuilder: (context , position){
+            return Column(
+              children: <Widget>[
+                Divider(height: 6.0,),
+                Card(
+                  child:   Row(
+                    children: <Widget>[
 
-    return ListView.builder(
-        itemCount: count,
-        itemBuilder: (BuildContext context, int position){
-          return Card (
-              color: Colors.white,
-              elevation: 2.0,
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  child: Icon(Icons.check),
+                      Expanded(child:   ListTile(
+                        title: Text(
+                          ' ${ documents[position].data['name']}',
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontSize: 24.0,
+                          ),
+                        ) ,
+
+
+                        subtitle: Text(
+                          'Code : ${ documents[position].data['code']}  ' + "\n"
+                              'Price : ${ documents[position].data['price']}' + "\n"
+                              'quantity : ${ documents[position].data['quantity']}' + "\n" ,
+
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 15.0,
+
+                          ),
+                        ),
+
+                        leading: Column(
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundColor: Colors.black,
+                              radius: 18.0,
+                              child: Text('${position + 1}' ,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),),
+                            ),
+
+                          ],
+                        ),
+                      ),),
+
+                      IconButton(
+                          icon: Icon(Icons.delete,color: Colors.red)
+                          , onPressed: () {db.deleteDrug(documents[position].documentID);}
+                      ),
+                      IconButton(
+                          icon: Icon(Icons.edit,color: Colors.blue)
+                          ,  onPressed: () {}
+                      )
+
+                    ],
+                  ),
                 ),
-                title: Text(this.drugsList[position].drugName),
-                subtitle: Text("Code "+this.drugsList[position].drugCode + " | " +
-                    " price "+ this.drugsList[position].drugPrice.toString()
-                    +"/n"+"Quantity "+ this.drugsList[position].drugQuantity.toString()),
 
-                trailing:
-                GestureDetector( child: Icon(Icons.delete, color: Colors.grey,),
-                  onTap: (){
-                    /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-                 return class_delete ("delete Drug");
-                }));*/
-                  },
-                ),
 
-              ));
-        });
+
+              ],
+
+            );
+
+          }
+      ),
+    );
+
   }
 
 }
+
+
+
+
+void _createNewDrug(BuildContext context)async{
+  await Navigator.push(context,
+    MaterialPageRoute(builder: (context) => AddDrugs()),
+  );
+}
+
