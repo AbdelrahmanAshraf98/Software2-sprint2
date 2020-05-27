@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Constants.dart';
@@ -8,8 +7,8 @@ class UserHome extends StatelessWidget {
   int Userage = 22;
   String Usernum = '01033179558';
   String Userad = 'elwaili-abbasia-cairo';
-  String text ;
-  final TextController = TextEditingController() ;
+  String text;
+  final TextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +46,8 @@ class UserHome extends StatelessWidget {
                   fontSize: 18,
                   color: P_color,
                 ),
-                onChanged:(value){
-                   text = value;
+                onChanged: (value) {
+                  text = value;
                 },
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
@@ -56,7 +55,7 @@ class UserHome extends StatelessWidget {
                         FontAwesomeIcons.search,
                         color: P_color,
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         print(text);
                         TextController.clear();
                       },
@@ -117,12 +116,60 @@ class UserHome extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Top Pharmacies',
+                style: TextStyle(
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w400,
+                    color: P_color,
+                    fontSize: 18,
+                ),
+              ),
+            ),
+            Container(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  pharmacy_card(),
+                  pharmacy_card(),
+                  pharmacy_card(),
+                  pharmacy_card(),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Best Selling',
+                style: TextStyle(
+                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w400,
+                  color: P_color,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  pharmacy_card2(),
+                  pharmacy_card2(),
+                  pharmacy_card2(),
+                  pharmacy_card2(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
+        unselectedItemColor: S_color,
         backgroundColor: P_color,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -138,6 +185,107 @@ class UserHome extends StatelessWidget {
             title: Text('order'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class pharmacy_card extends StatelessWidget {
+  const pharmacy_card({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        width: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+                radius: 40,
+                child: Image(
+                  image: AssetImage('images/logo.png'),
+                )),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              'Elezaby 1',
+              style: klabelStyle.copyWith(color: P_color),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  FontAwesomeIcons.phoneAlt,
+                  size: 15,
+                ),
+                Text(
+                  '19955',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class pharmacy_card2 extends StatelessWidget {
+  const pharmacy_card2({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              CircleAvatar(
+                  radius: 30,
+                  backgroundColor: S_color,
+                  child: Image(
+                    image: AssetImage('images/logo.png'),
+                  )),
+              SizedBox(
+                height: 5,
+              ),
+              Column(
+                children:<Widget>[
+                  Text(
+                  'ketoval 500',
+                  style: klabelStyle.copyWith(color: P_color),
+                ),
+                  Text(
+                    'El Ezaby',
+                    style: klabelStyle.copyWith(color: P_color),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        FontAwesomeIcons.phoneAlt,
+                        size: 15,
+                      ),
+                      Text(
+                        '19955',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ],
+        ),
+              Text('25 L.E/P',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
+            ],
+          ),
+        ),
       ),
     );
   }
