@@ -4,8 +4,15 @@ class Drugs{
   String drugCode;
   String drugPrice;
   String drugQuantity;
+  String drugId;
+  String drugLocation;
 
-  Drugs({this.drugName,this.drugCode,this.drugPrice,this.drugQuantity});
+  Drugs({this.drugName,
+         this.drugCode,
+         this.drugPrice,
+         this.drugQuantity,
+         this.drugId,
+         this.drugLocation});
 }
   //TODO: adddrugs();
   //TODO: deletedrugs();

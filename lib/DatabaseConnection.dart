@@ -11,7 +11,8 @@ addDrugs(Drugs drug){
     'name' : drug.drugName,
     'code' : drug.drugCode,
     'price' : drug.drugPrice,
-    'quantity' : drug.drugQuantity
+    'quantity' : drug.drugQuantity,
+    'location' : drug.drugLocation
   });
 }
 
