@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'Constants.dart';
 import 'DatabaseConnection.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacyapp/addDrugs.dart';
@@ -23,7 +25,8 @@ class _ListViewDrugState extends State<ListViewDrug>{
         appBar: AppBar(
           title: Text('Drug list'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: P_color,
+          leading: IconButton(icon: Icon(FontAwesomeIcons.arrowLeft), onPressed: () {}),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
@@ -65,7 +68,7 @@ class DrugList extends StatelessWidget {
                         title: Text(
                           ' ${ documents[position].data['name']}',
                           style: TextStyle(
-                            color: Colors.blueAccent,
+                            color: P_color,
                             fontSize: 24.0,
                           ),
                         ) ,
@@ -86,13 +89,12 @@ class DrugList extends StatelessWidget {
                         leading: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.black,
-                              radius: 18.0,
-                              child: Text('${position + 1}' ,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                ),),
+                              backgroundColor: Colors.white,
+                              radius: 25.0,
+                              child: Image(
+                            image: AssetImage('${ documents[position].data['location']}'),
+
+                              )
                             ),
 
                           ],

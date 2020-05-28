@@ -23,7 +23,7 @@ class Main extends StatelessWidget {
         primaryColor: Colors.blue[300],
         scaffoldBackgroundColor: Colors.red[20],
       ),
-      home: AddDrugs(),
+      home: ListViewDrug(),
     );
   }
 }
