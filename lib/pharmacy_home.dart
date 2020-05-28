@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmacyapp/DrugsList.dart';
+import 'package:pharmacyapp/addDrugs.dart';
 import 'Constants.dart';
 
 class PharmacyHome extends StatelessWidget {
@@ -113,10 +115,13 @@ class PharmacyHome extends StatelessWidget {
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.white,
-                            child: Icon(
-                              FontAwesomeIcons.plus,
-                              size: 40,
-                              color: P_color,
+                            child: GestureDetector(
+                              onDoubleTap: () => AddDrugs(),
+                              child: Icon(
+                                FontAwesomeIcons.plus,
+                                size: 40,
+                                color: P_color,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -145,10 +150,13 @@ class PharmacyHome extends StatelessWidget {
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.white,
-                            child: Icon(
-                              FontAwesomeIcons.edit,
-                              size: 40,
-                              color: P_color,
+                            child: GestureDetector(
+                              onDoubleTap: () => DrugList() ,
+                              child: Icon(
+                                FontAwesomeIcons.edit,
+                                size: 40,
+                                color: P_color,
+                              ),
                             ),
                           ),
                           SizedBox(

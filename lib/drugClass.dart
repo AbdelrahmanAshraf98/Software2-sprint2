@@ -12,7 +12,8 @@ class Drugs{
          this.drugPrice,
          this.drugQuantity,
          this.drugId,
-         this.drugLocation});
+         this.drugLocation
+  });
 }
   //TODO: adddrugs();
   //TODO: deletedrugs();

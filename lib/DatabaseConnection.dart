@@ -5,7 +5,7 @@ import 'drugClass.dart';
 import 'userclass.dart';
 class DataBaseConnection{
 final Firestore _firestore = Firestore.instance;
-
+// Drug Class Database functions
 addDrugs(Drugs drug){
   _firestore.collection("Drugs").add({
     'name' : drug.drugName,
@@ -30,6 +30,8 @@ updateDrugs(data, documentId) {
       .document(documentId)
       .updateData(data);
 }
+
+// User Class database Functions
 addUser(Users user){
 _firestore.collection('Users').add({
   'username' : user.userName,
