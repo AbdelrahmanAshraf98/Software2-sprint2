@@ -24,7 +24,7 @@ deleteDrug(documentId) {
   _firestore.collection("Drugs").document(documentId).delete();
 }
 
-editDrugs(data, documentId) {
+updateDrugs(data, documentId) {
   _firestore
       .collection('Drugs')
       .document(documentId)

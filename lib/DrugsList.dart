@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'DatabaseConnection.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacyapp/addDrugs.dart';
+import 'editDrugs.dart';
 DataBaseConnection db = DataBaseConnection();
 class ListViewDrug extends StatefulWidget{
   @override
@@ -104,7 +105,9 @@ class DrugList extends StatelessWidget {
                       ),
                       IconButton(
                           icon: Icon(Icons.edit,color: Colors.blue)
-                          ,  onPressed: () {}
+                          ,  onPressed: () {Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UpdateDrugsForm(documents[position])),
+                      );}
                       )
 
                     ],
