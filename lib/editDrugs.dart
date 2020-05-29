@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:pharmacyapp/DatabaseConnection.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pharmacyapp/Constants.dart';
-
 import 'DrugsList.dart';
 
 
@@ -69,6 +68,14 @@ class _UpdateDrugsFormState extends State<UpdateDrugsForm>{
               initialValue:widget.document.data['quantity'],
 
           ),
+
+          TextFormField(
+            decoration: InputDecoration(labelText: 'medicine image'),
+            onSaved: (val)=> _drugLocation= val,
+            initialValue:widget.document.data['location']
+            ,
+          ),
+
           SizedBox(
             height: 20,
           ),
@@ -88,7 +95,8 @@ class _UpdateDrugsFormState extends State<UpdateDrugsForm>{
                   'name' : _drugName,
                   'code' : _drugCode,
                   'price': _drugPrice,
-                  'quantity': _drugQuantity}
+                  'quantity': _drugQuantity,
+                  'location': _drugLocation }
                   ,widget.document.documentID
                 );
 
