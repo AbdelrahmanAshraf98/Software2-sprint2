@@ -2,19 +2,66 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'userclass.dart';
+import 'package:pharmacyapp/DatabaseConnection.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'userhome.dart';
 class UserUpdate extends StatefulWidget {
   @override
   _UserUpdateState createState() => _UserUpdateState();
 }
 
 class _UserUpdateState extends State<UserUpdate> {
-  String name = 'abdelrahman',
-      num = '01033179558',
-      location = 'elwaili-abbasia-cairo',
-      password = '982018';
+  Users user = new Users();
+  DocumentSnapshot _documentSnapshot;
+/**
+  String name = ,
+      num = null,
+      location = null,
+      password = null;
+**/
+
+  String name,num, location , password;
   bool eye = true, first = false, second = false, third = false,forth = false;
   int age = 22;
+   
+  TextEditingController _usernameController = TextEditingController(text: 'salmakhaled' );
+  TextEditingController _addressController = TextEditingController(text :'giza');
+  TextEditingController _phoneController = TextEditingController(text: '0203240048034');
+  TextEditingController _passwordController = TextEditingController();
+   DocumentSnapshot _currentDocument;
+
+  List<DocumentSnapshot> document ;
+
+  //UserUpdate({this.documents});
+
+  GlobalKey _key = new GlobalKey() ;
+  _updateUsername() async{
+    Firestore db = new Firestore();
+    //_currentdocument.documentID
+    await db.collection('Users')
+        .document('u2KvQgG5KZUNDjdo8YY6')
+        .updateData({'username' : _usernameController.text});
+  }
+  _updateAddress() async{
+    Firestore db = new Firestore();
+    await db.collection('Users')
+        .document('u2KvQgG5KZUNDjdo8YY6')
+        .updateData({'address' : _addressController.text});
+  }
+  _updatePassword() async{
+    Firestore db = new Firestore();
+    await db.collection('Users')
+        .document('u2KvQgG5KZUNDjdo8YY6')
+        .updateData({'password' : _passwordController.text});
+  }
+  _updatePhone() async{
+    Firestore db = new Firestore();
+    await db.collection('Users')
+        .document('u2KvQgG5KZUNDjdo8YY6')
+        .updateData({'phone' : _phoneController.text});
+  }
+
 
   List<DropdownMenuItem<String>> d = [];
   DropdownButton<String> androidDropDown() {
@@ -32,7 +79,12 @@ class _UserUpdateState extends State<UserUpdate> {
     // TODO: implement initState
     super.initState();
     androidDropDown();
-  }
+    _usernameController.addListener(_updateUsername);
+    _addressController.addListener(_updateAddress);
+    _phoneController.addListener(_updatePhone);
+    _passwordController.addListener(_updatePassword);
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +104,7 @@ class _UserUpdateState extends State<UserUpdate> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
+          key: _key,
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,29 +133,37 @@ class _UserUpdateState extends State<UserUpdate> {
                 Row(
                   children: <Widget>[
                   Expanded(
-                    child: TextField(
+                    child: TextFormField(
                       decoration: InputDecoration(
-                          hintText: name,
+                       //   hintText: _currentDocument.data['username'],
                           hintStyle: klabelStyle.copyWith(color: L_color),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: P_color))),
 //                obscureText: true,
+                    // initialValue:,
+                      controller: _usernameController,
                       enabled: first,
+
                       onChanged: (value) {
-                        name = value;
+                        user.userName = value;
                       },
+
                     ),
                   ),
                   IconButton(
                     icon: Icon(FontAwesomeIcons.pencilAlt),
                     color: P_color,
                     onPressed: () {
+
                       setState(() {
                         if (first == true)
                           first = false;
                         else
                           first = true;
                       });
+                        _updateUsername();
+
+
                     },
                   ),
                 ],),
@@ -134,16 +195,17 @@ class _UserUpdateState extends State<UserUpdate> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        controller: _phoneController,
                         decoration: InputDecoration(
-                            hintText:num,
+                       //     hintText: _currentDocument.data['phone'],
                             hintStyle: klabelStyle.copyWith(color: L_color),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: P_color))),
 //                obscureText: true,
                         enabled: second,
                         onChanged: (value) {
-                          name = value;
+                          user.userPhone = value;
                         },
                       ),
                     ),
@@ -157,6 +219,7 @@ class _UserUpdateState extends State<UserUpdate> {
                           else
                             second = true;
                         });
+                        _updatePhone();
                       },
                     ),
                   ],),
@@ -170,16 +233,17 @@ class _UserUpdateState extends State<UserUpdate> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        controller: _addressController,
                         decoration: InputDecoration(
-                            hintText: location,
+                       //     hintText: _currentDocument.data['address'],
                             hintStyle: klabelStyle.copyWith(color: L_color),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: P_color))),
 //                obscureText: true,
                         enabled: third,
                         onChanged: (value) {
-                          location = value;
+                          user.userAddress = value;
                         },
                       ),
                     ),
@@ -194,6 +258,7 @@ class _UserUpdateState extends State<UserUpdate> {
                           else
                             third = true;
                         });
+                        _updateAddress();
                       },
                     ),
                   ],),
@@ -207,7 +272,8 @@ class _UserUpdateState extends State<UserUpdate> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        controller: _passwordController,
                         enabled: forth,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -230,7 +296,7 @@ class _UserUpdateState extends State<UserUpdate> {
                                 borderSide: BorderSide(color: P_color))),
                         obscureText: eye,
                         onChanged: (value) {
-                          password = value;
+                          user.userPassword = value;
                         },
                       ),
                     ),
@@ -244,6 +310,7 @@ class _UserUpdateState extends State<UserUpdate> {
                           else
                             forth = true;
                         });
+                        _updatePassword();
                       },
                     ),
                   ],),
@@ -252,7 +319,11 @@ class _UserUpdateState extends State<UserUpdate> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                  //  Navigator.pop(context);
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserHome()),
+
+                    );
                     print('edited');
                   },
                   child: Center(

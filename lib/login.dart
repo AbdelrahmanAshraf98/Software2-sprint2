@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacyapp/loading.dart';
 import 'userhome.dart';
 import 'pharmacy_home.dart';
 import 'Constants.dart';
@@ -7,7 +6,6 @@ import 'signup.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'userclass.dart';
-import 'loading.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -128,20 +126,20 @@ class _LoginState extends State<Login> {
                                   await _auth.signInWithEmailAndPassword(
                                   email: email, password: password);
                               if (newuser != null) {
-//                                print(user.userType);
                                 //TODO::ngeb type el user w n7oto fel condition el t7t dh mkan 'user'
+
                                 if ( user.userType == 'user') {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {
-                                      return UserHome(email: email,);
+                                      return UserHome();
                                     }),
                                   );
                                 } else {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {
-                                      return loading();
+                                      return PharmacyHome();
                                     }),
                                   );
                                 }

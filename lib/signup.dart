@@ -125,44 +125,46 @@ class _SignUpPage extends State<SignUpPage> {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () async {
-                            try {
-                              final newuser =
-                                  await _auth.createUserWithEmailAndPassword(
-                                      email: email, password: password);
-                              print('errrrrrrrrrrorrrrrrr $newuser');
-                              if (newuser != null) {
-                                //TODO::nadef el data l tabel el user email w password w type
-                                if (_key.currentState.validate()) {
-                                  _key.currentState.save();
+                            if (_key.currentState.validate()) {
+                                 _key.currentState.save();
+                              try {
+                                final newuser =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: email, password: password);
+
+                                if (newuser != null) {
+                                  //TODO::nadef el data l tabel el user email w password w type
+
                                   db.addUser(Users(
                                     userName: username,
                                     userEmail: email,
                                     userPassword: password,
                                     userType: type.toLowerCase(),
                                   ));
+
+                                  if (type.toLowerCase() == 'user') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return UserHome();
+                                      }),
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return PharmacyHome();
+                                      }),
+                                    );
+                                  }
                                 }
-                                if (type.toLowerCase() == 'user') {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return UserHome();
-                                    }),
-                                  );
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return PharmacyHome();
-                                    }),
-                                  );
-                                }
+                              } catch (e) {
+                                Alert(
+                                  context: context,
+                                  title: 'invalid input',
+                                  desc: e,
+                                ).show();
                               }
-                            } catch (e) {
-                              Alert(
-                                context: context,
-                                title: 'invalid input',
-                                desc: e,
-                              ).show();
                             }
                           },
                           child: Center(

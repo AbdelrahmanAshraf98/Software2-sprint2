@@ -7,12 +7,14 @@ class Users {
   String userAge;
   String userPhone;
   String userType;
+  String userAddress;
 
   Users({this.userName,
          this.userEmail,
          this.userPassword,
          this.userType,
          this.userAge,
-         this.userPhone});
+         this.userPhone,
+         this.userAddress});
 
 }
