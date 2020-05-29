@@ -1,15 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Constants.dart';
+import 'userupdate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class UserHome extends StatelessWidget {
+class UserHome extends StatefulWidget {
+  String email;
+  UserHome({this.email});
+  @override
+  _UserHomeState createState() => _UserHomeState();
+}
+
+class _UserHomeState extends State<UserHome> {
   String Username = 'Abdelrahman Ashraf';
   int Userage = 22;
   String Usernum = '01033179558';
   String Userad = 'elwaili-abbasia-cairo';
   String text;
+
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+  String email;
+  _UserHomeState({this.email});
+
   final TextController = TextEditingController();
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure ?'),
+            content: Text('You are going to exit the application'),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  }),
+              FlatButton(
+                  child: Text('yes'),
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  }),
+            ],
+          );
+        });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +58,12 @@ class UserHome extends StatelessWidget {
           IconButton(
             icon: Icon(FontAwesomeIcons.userAlt),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return UserUpdate();
+                }),
+              );
               print('profile');
             },
           ),
@@ -31,140 +75,153 @@ class UserHome extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            bottom: 15.0, top: 0, right: 15.0, left: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: 5, top: 0),
-              child: TextField(
-                controller: TextController,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: P_color,
+      body: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              bottom: 15.0, top: 0, right: 15.0, left: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20.0, right: 20.0, bottom: 5, top: 0),
+                child: TextField(
+                  controller: TextController,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: P_color,
+                  ),
+                  onChanged: (value) {
+                    text = value;
+                  },
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.search,
+                          color: P_color,
+                        ),
+                        onPressed: () {
+                          print(text);
+                          TextController.clear();
+                        },
+                      ),
+                      hintText: 'Enter a pharamacy or a drug name',
+                      hintStyle: TextStyle(
+                        color: L_color,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: S_color),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: P_color),
+                      )),
                 ),
-                onChanged: (value) {
-                  text = value;
-                },
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.search,
-                        color: P_color,
-                      ),
-                      onPressed: () {
-                        print(text);
-                        TextController.clear();
-                      },
-                    ),
-                    hintText: 'Enter a pharamacy or a drug name',
-                    hintStyle: TextStyle(
-                      color: L_color,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: S_color),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: P_color),
-                    )),
               ),
-            ),
-            Card(
-              color: P_color,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                        radius: 60,
-                        child: Image(
-                          image: AssetImage('images/logo.png'),
-                        )),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(Username, style: kbuttonStyle),
-                          Row(
-                            children: <Widget>[
-                              Text('$Userage y', style: klabelStyle),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(Usernum, style: klabelStyle),
-                            ],
-                          ),
-                          Text(Userad, style: klabelStyle),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Text(
-                              'edit profile >>',
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ],
+              Card(
+                color: P_color,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                          radius: 60,
+                          child: Image(
+                            image: AssetImage('images/logo.png'),
+                          )),
+                      SizedBox(
+                        width: 20,
                       ),
-                    )
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(Username, style: kbuttonStyle),
+                            Row(
+                              children: <Widget>[
+                                Text('$Userage y', style: klabelStyle),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(Usernum, style: klabelStyle),
+                              ],
+                            ),
+                            Text(Userad, style: klabelStyle),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return UserUpdate();
+                                    }),
+                                  );
+                                },
+                                child: Text(
+                                  'edit profile >>',
+                                  style: TextStyle(color: Colors.white, fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Top Pharmacies',
+                  style: TextStyle(
+                      letterSpacing: 1.0,
+                      fontWeight: FontWeight.w400,
+                      color: P_color,
+                      fontSize: 18,
+                  ),
+                ),
+              ),
+              Container(
+                height: 170,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    pharmacy_card(),
+                    pharmacy_card(),
+                    pharmacy_card(),
+                    pharmacy_card(),
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Top Pharmacies',
-                style: TextStyle(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Best Selling',
+                  style: TextStyle(
                     letterSpacing: 1.0,
                     fontWeight: FontWeight.w400,
                     color: P_color,
                     fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 170,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  pharmacy_card(),
-                  pharmacy_card(),
-                  pharmacy_card(),
-                  pharmacy_card(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Best Selling',
-                style: TextStyle(
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w400,
-                  color: P_color,
-                  fontSize: 18,
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: <Widget>[
+                    pharmacy_card2(),
+                    pharmacy_card2(),
+                    pharmacy_card2(),
+                    pharmacy_card2(),
+                  ],
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  pharmacy_card2(),
-                  pharmacy_card2(),
-                  pharmacy_card2(),
-                  pharmacy_card2(),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -9,7 +9,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'DatabaseConnection.dart';
 import 'userclass.dart';
 
-
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPage createState() => _SignUpPage();
@@ -27,7 +26,6 @@ class _SignUpPage extends State<SignUpPage> {
         resizeToAvoidBottomInset: false,
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: <Widget>[
               Container(
                 child: Stack(
@@ -127,40 +125,39 @@ class _SignUpPage extends State<SignUpPage> {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () async {
-                            try{
+                            try {
                               final newuser =
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: email, password: password);
-                            if (newuser != null) {
-                              //TODO::nadef el data l tabel el user email w password w type
-                              if(_key.currentState.validate()){
-                                _key.currentState.save();
-                                db.addUser(Users(
-                                  userName : username,
-                                  userEmail : email,
-                                  userPassword: password,
-                                  userType: type,
-                                ));
-
+                                  await _auth.createUserWithEmailAndPassword(
+                                      email: email, password: password);
+                              print('errrrrrrrrrrorrrrrrr $newuser');
+                              if (newuser != null) {
+                                //TODO::nadef el data l tabel el user email w password w type
+                                if (_key.currentState.validate()) {
+                                  _key.currentState.save();
+                                  db.addUser(Users(
+                                    userName: username,
+                                    userEmail: email,
+                                    userPassword: password,
+                                    userType: type.toLowerCase(),
+                                  ));
+                                }
+                                if (type.toLowerCase() == 'user') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return UserHome();
+                                    }),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return PharmacyHome();
+                                    }),
+                                  );
+                                }
                               }
-                              if (type.toLowerCase() == 'user') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return UserHome();
-                                  }),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return PharmacyHome();
-                                  }),
-                                );
-                              }
-                            }}
-                            catch(e) {
-
+                            } catch (e) {
                               Alert(
                                 context: context,
                                 title: 'invalid input',
@@ -197,19 +194,22 @@ class _SignUpPage extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             InkWell(
-                              onTap:(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return WelcomePage();
-                                }),);
-                              } ,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return WelcomePage();
+                                    }),
+                                  );
+                                },
                                 child: Text(
-                              'Back',
-                              style: TextStyle(
-                                  color: P_color,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline),
-                            )),
+                                  'Back',
+                                  style: TextStyle(
+                                      color: P_color,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline),
+                                )),
                           ],
                         ),
                       ),
