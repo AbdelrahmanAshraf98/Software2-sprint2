@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'Constants.dart';
 import 'userupdate.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UserHome extends StatefulWidget {
   String email;
+
   UserHome({this.email});
+
   @override
   _UserHomeState createState() => _UserHomeState();
 }
@@ -22,6 +25,7 @@ class _UserHomeState extends State<UserHome> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
   String email;
+
   _UserHomeState({this.email});
 
   final TextController = TextEditingController();
@@ -48,6 +52,7 @@ class _UserHomeState extends State<UserHome> {
           );
         });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,10 +183,10 @@ class _UserHomeState extends State<UserHome> {
                 child: Text(
                   'Top Pharmacies',
                   style: TextStyle(
-                      letterSpacing: 1.0,
-                      fontWeight: FontWeight.w400,
-                      color: P_color,
-                      fontSize: 18,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w400,
+                    color: P_color,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -234,7 +239,8 @@ class _UserHomeState extends State<UserHome> {
             title: Text('home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.shoppingCart),
+            icon: Icon(FontAwesomeIcons.shoppingCart
+            ),
             title: Text('cart'),
           ),
           BottomNavigationBarItem(
@@ -317,9 +323,9 @@ class pharmacy_card2 extends StatelessWidget {
               Column(
                 children:<Widget>[
                   Text(
-                  'ketoval 500',
-                  style: klabelStyle.copyWith(color: P_color),
-                ),
+                    'ketoval 500',
+                    style: klabelStyle.copyWith(color: P_color),
+                  ),
                   Text(
                     'El Ezaby',
                     style: klabelStyle.copyWith(color: P_color),
@@ -338,7 +344,7 @@ class pharmacy_card2 extends StatelessWidget {
                     ],
                   ),
                 ],
-        ),
+              ),
               Text('25 L.E/P',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),)
             ],
           ),

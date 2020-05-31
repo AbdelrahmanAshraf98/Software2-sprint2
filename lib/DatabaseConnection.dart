@@ -1,6 +1,8 @@
 
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'drugClass.dart';
 import 'userclass.dart';
 class DataBaseConnection{
@@ -41,6 +43,20 @@ _firestore.collection('Users').add({
   'type': user.userType,});
 }
 
+  addToCart(name, code, price, quantity, location) {
+    _firestore.collection("Cart").add({
+      'name': name,
+      'code': code,
+      'price': price,
+      'quantity': quantity,
+      'location': location,
+      'counter': 0,
+    });
+  }
+
+  deleteFromCart(documentId) {
+    _firestore.collection("Cart").document(documentId).delete();
+  }
 }
 
 

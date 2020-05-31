@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmacyapp/addDrugs.dart';
+
 import 'Constants.dart';
 import 'DatabaseConnection.dart';
-import 'package:flutter/material.dart';
-import 'package:pharmacyapp/addDrugs.dart';
 import 'editDrugs.dart';
 DataBaseConnection db = DataBaseConnection();
 class ListViewDrug extends StatefulWidget{
@@ -110,7 +110,19 @@ class DrugList extends StatelessWidget {
                           ,  onPressed: () {Navigator.push(context,
                         MaterialPageRoute(builder: (context) => UpdateDrugsForm(documents[position])),
                       );}
-                      )
+                      ),
+                      IconButton(
+                          icon: Icon(
+                              Icons.add_shopping_cart, color: Colors.blue)
+                          , onPressed: () {
+                        db.addToCart(
+                            documents[position].data['name'],
+                            documents[position].data['code'],
+                            documents[position].data['price'],
+                            documents[position].data['quantity'],
+                            documents[position].data['location']);
+                      }
+                      ),
 
                     ],
                   ),
