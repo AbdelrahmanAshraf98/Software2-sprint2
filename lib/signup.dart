@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pharmacyapp/Constants.dart';
 import 'package:pharmacyapp/userhome.dart';
 import 'package:pharmacyapp/welcome.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'DatabaseConnection.dart';
 import 'pharmacy_home.dart';
@@ -18,7 +20,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPage extends State<SignUpPage> {
   final _auth = FirebaseAuth.instance;
   GlobalKey<FormState> _key = new GlobalKey();
-  String email, password, username, type;
+  String email, password, username, type , phone, age , address;
   DataBaseConnection db = new DataBaseConnection();
 
   @override
@@ -90,6 +92,54 @@ class _SignUpPage extends State<SignUpPage> {
                           SizedBox(height: 22.0),
                           TextField(
                             onChanged: (value) {
+                              phone = value;
+                            },
+                            decoration: InputDecoration(
+                                labelText: 'phone',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    letterSpacing: 2.0),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: P_color))),
+
+                          ),
+                          SizedBox(height: 22.0),
+                          TextField(
+                            onChanged: (value) {
+                              age= value;
+                            },
+                            decoration: InputDecoration(
+                                labelText: 'Age',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    letterSpacing: 2.0),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: P_color))),
+
+                          ),
+                          SizedBox(height: 22.0),
+                          TextField(
+                            onChanged: (value) {
+                              address = value;
+                            },
+                            decoration: InputDecoration(
+                                labelText: 'address',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    letterSpacing: 2.0),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: P_color))),
+
+                          ),
+                          SizedBox(height: 22.0),
+                          TextField(
+                            onChanged: (value) {
                               password = value;
                             },
                             decoration: InputDecoration(
@@ -130,24 +180,31 @@ class _SignUpPage extends State<SignUpPage> {
                               elevation: 7.0,
                               child: GestureDetector(
                                 onTap: () async {
-                                  if (_key.currentState.validate()) {
-                                    _key.currentState.save();
+
                                     try {
+                                      if (_key.currentState.validate()) {
+                                        _key.currentState.save();
                                       final newuser =
                                       await _auth
                                           .createUserWithEmailAndPassword(
                                           email: email, password: password);
 
-                                      if (newuser != null) {
+                                    //  if (newuser != null) {
                                         //TODO::nadef el data l tabel el user email w password w type
+                                      //  FirebaseUser user = newuser.user;
+                                      //  await Firestore.instance.collection('Users').document(user.uid).setData({ 'username': username , 'email': email , 'phone': phone, 'age':age, 'type': type });
 
-                                        print("zaki");
+
                                         db.addUser(Users(
                                           userName: username,
                                           userEmail: email,
                                           userPassword: password,
+                                          userAge: age,
+                                          userAddress: address,
+                                          userPhone: phone,
                                           userType: type.toLowerCase(),
                                         ));
+
 
                                         if (type.toLowerCase() == 'user') {
                                           Navigator.push(
@@ -166,7 +223,8 @@ class _SignUpPage extends State<SignUpPage> {
                                                 }),
                                           );
                                         }
-                                      }
+                                        }
+
                                     } catch (e) {
                                       Alert(
                                         context: context,
@@ -174,7 +232,7 @@ class _SignUpPage extends State<SignUpPage> {
                                         desc: e,
                                       ).show();
                                     }
-                                  }
+
                                 },
                                 child: Center(
                                   child: Text(
@@ -237,3 +295,4 @@ class _SignUpPage extends State<SignUpPage> {
         ));
   }
 }
+
