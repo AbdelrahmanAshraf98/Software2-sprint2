@@ -134,7 +134,7 @@ class _UserHomeState extends State<UserHome> {
                       CircleAvatar(
                           radius: 60,
                           child: Image(
-                            image: AssetImage('images/logo.png'),
+                            image: AssetImage('assets/images/2.png'),
                           )),
                       SizedBox(
                         width: 20,
@@ -269,7 +269,7 @@ class pharmacy_card extends StatelessWidget {
             CircleAvatar(
                 radius: 40,
                 child: Image(
-                  image: AssetImage('images/logo.png'),
+                  image: AssetImage('assets/images/download.jpg'),
                 )),
             SizedBox(
               height: 5,
@@ -315,7 +315,7 @@ class pharmacy_card2 extends StatelessWidget {
                   radius: 30,
                   backgroundColor: S_color,
                   child: Image(
-                    image: AssetImage('images/logo.png'),
+                    image: AssetImage('assets/images/Panadol-Extra.png'),
                   )),
               SizedBox(
                 height: 5,
@@ -323,7 +323,7 @@ class pharmacy_card2 extends StatelessWidget {
               Column(
                 children:<Widget>[
                   Text(
-                    'ketoval 500',
+                    'Panadol-Extra',
                     style: klabelStyle.copyWith(color: P_color),
                   ),
                   Text(

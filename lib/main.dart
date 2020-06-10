@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'welcome.dart';
 import 'userhome.dart';
+import 'userhome.dart';
+import 'bill.dart';
+import 'DrugsList.dart';
 
 
 void main() => runApp(Main());
@@ -15,7 +18,7 @@ class Main extends StatelessWidget {
         primaryColor: Colors.blue[300],
         scaffoldBackgroundColor: Colors.red[20],
       ),
-      home: UserHome(),
+      home: WelcomePage(),
     );
   }
 }

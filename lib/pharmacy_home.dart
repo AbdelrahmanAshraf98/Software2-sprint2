@@ -95,7 +95,7 @@ class _PharmacyHomeState extends State<PharmacyHome> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(email, style: klabelStyle.copyWith(color: P_color)),
+              Text(pharname, style: klabelStyle.copyWith(color: P_color)),
               Container(
                 child: Card(
                   color: S_color,
@@ -106,7 +106,7 @@ class _PharmacyHomeState extends State<PharmacyHome> {
                         CircleAvatar(
                             radius: 60,
                             child: Image(
-                              image: AssetImage('images/logo.png'),
+                              image: AssetImage('assets/images/download.jpg'),
                             )),
                         SizedBox(
                           width: 20,
@@ -207,7 +207,7 @@ class _PharmacyHomeState extends State<PharmacyHome> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              return DrugList();
+                              return ListViewDrug();
                             }),
                           );
                         },
